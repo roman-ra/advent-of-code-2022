@@ -2,7 +2,9 @@
 #include <iostream>
 #include <string>
 
-const unsigned score_lut[3][3] = {{4,8,3}, {1,5,9}, {7,2,6}};
+const unsigned score_lut[3][3] = {{3 + 1, 6 + 2, 0 + 3},
+                                  {0 + 1, 3 + 2, 6 + 3},
+                                  {6 + 1, 0 + 2, 3 + 3}};
 
 int main(int argc, char *argv[])
 {
