@@ -26,5 +26,7 @@ int main(int argc, char *argv[])
 
     std::cout<<max_calories<<std::endl;
 
+    input.close();
+    
     return 0;
 }
