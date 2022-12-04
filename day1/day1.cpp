@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
         max_calories = current_calories;
     }
 
-    std::cout<<max_calories<<std::endl;
+    std::cout << max_calories << std::endl;
 
     input.close();
     
