@@ -4,8 +4,7 @@
 #include <sstream>
 #include <vector>
 
-#define MAX_DIR_SIZE 100000ULL
-#define REQUIRED_SPACE 30000000ULL
+#define MAX_SPACE (70000000ULL - 30000000ULL)
 
 enum line_type { LINE_CMD_CD_ROOT, LINE_CMD_CD_PARENT, LINE_CMD_CD_DIR, LINE_CMD_LS, LINE_DIR, LINE_FILE };
 
@@ -40,14 +39,15 @@ struct dir {
         return total;
     }
 
-    void count_total_smaller_than(unsigned long long &sum,
-                                  unsigned long long threshold) {
+    void find_smallest_suitable(unsigned long long &smallest_size,
+                                unsigned long long total_size) {
         unsigned long long own_size = size();
-        if (own_size <= threshold) {
-            sum += own_size;
+        if (((total_size - own_size) <= MAX_SPACE) 
+                && (own_size < smallest_size)) {
+            smallest_size = own_size;
         }
         for (auto subdir: subdirs) {
-            subdir->count_total_smaller_than(sum, threshold);
+            subdir->find_smallest_suitable(smallest_size, total_size);
         }
     }
 
@@ -87,9 +87,10 @@ int main(int argc, char *argv[])
         }
     }
 
-    unsigned long long sum{0};
-    rootdir.count_total_smaller_than(sum, MAX_DIR_SIZE);
-    std::cout << sum << std::endl;
+    unsigned long long total_size{rootdir.size()};
+    unsigned long long smallest_suitable_size{total_size};
+    rootdir.find_smallest_suitable(smallest_suitable_size, total_size);
+    std::cout << smallest_suitable_size << std::endl;
    
     input.close();
     
