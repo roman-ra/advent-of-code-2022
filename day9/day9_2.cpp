@@ -5,7 +5,7 @@
 #include <bitset>
 
 #define MAP_SIZE 1024U
-#define NUM_KNOTS 2U
+#define NUM_KNOTS 10U
 
 template <typename T> int sgn(T val) {
     return (T(0) < val) - (val < T(0));
